@@ -85,12 +85,12 @@ def counties_viz(df):
     two subplots that visualize how home prices vary in counties
     the left subplot shows median prices and the right subplot shows mean prices
     '''
-    plt.figure(figsize=(18, 6), facecolor='#fbf3e4')
+    plt.figure(figsize=(18, 6))
 
     # Median home prices in LA, Ventura and Orange counties
     plt.suptitle('Home prices in different counties', fontsize=20)
     plt.subplot(121)
-    graph = sns.barplot(x='county_name', y='home_value', estimator=np.median, data=df, palette='flare')
+    graph = sns.barplot(x='county_name', y='home_value', estimator=np.median, data=df, palette='rocket_r')
     graph.axhline(df.home_value.median(), color = (0.4, 0.4, 0.4), label = 'median')
     plt.title('Median', fontsize=16)
     plt.ylim(0, 550_000)
@@ -98,7 +98,7 @@ def counties_viz(df):
 
     # Mean home prices in LA, Ventura and Orange counties
     plt.subplot(122)
-    graph = sns.barplot(x='county_name', y='home_value', data=df, palette='Accent')
+    graph = sns.barplot(x='county_name', y='home_value', data=df, palette='rocket_r')
     graph.axhline(df.home_value.mean(), color = (0.4, 0.4, 0.4), label = 'mean')
     plt.title('Mean', fontsize=16)
     plt.ylim(0, 550_000)
@@ -144,7 +144,7 @@ def sqft_price_viz(df):
     # create a custom palette for the 2nd subplot
     palette = ["#3544D1", '#24A54B', '#EF7C64']
     # set a title
-    plt.suptitle('Correlation between house area and home prices', fontsize=20)
+    plt.suptitle('Correlation Between Area of House and Home Price', fontsize=20)
 
     # subplot #1
     plt.subplot(121)
@@ -346,3 +346,18 @@ def plot_categorical_and_continuous_vars(df, cat_vars, cont_vars):
         #print('Categorical vs Continuous Variables:')
         t3.start()
         t3.join()
+
+def price_distribution_graph():
+    plt.figure(figsize = (10, 6), facecolor='#fbf3e4')
+    plt.suptitle('Home price distribution in the data set', fontsize = 20)
+    bins = np.arange(0, 2_000_000, 100_000).astype(int)
+    ax = sns.histplot(data=train, x = 'home_value',stat='percent', bins=bins,  kde=True)
+    plt.vlines(train.home_value.mean(), 0, 11.9, color=(0.82, 0.29, 0.38), label='mean price')
+    plt.vlines(train.home_value.median(), 0, 13.6, color='blue', label='median price')
+    plt.xlabel('Price till $2.0 Million', fontsize=16)
+    plt.ylabel('Percentage', fontsize=16)
+    plt.text(1_500_500, 6, 'each bin = $100,000')
+    plt.text(1_500_500, 9, f'mean - median = ${round(train.home_value.mean() - train.home_value.median(), 2)}')
+    plt.legend()
+
+    plt.show()
