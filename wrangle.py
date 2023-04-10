@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
-
+import env
 # ignore warnings
 import warnings
 warnings.filterwarnings("ignore")
@@ -19,7 +19,7 @@ import env
 ########## GLOBAL VARIABLES ##########
 
 # random state seed
-seed = 2912
+seed = 1349
 # target varibles -> predicting home prices
 target = 'home_value'
 
